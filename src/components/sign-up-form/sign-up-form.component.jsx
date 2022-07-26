@@ -4,6 +4,7 @@ import FormInput from "../form-imput/form-input.component";
 import '../../components/sign-up-form/sign-up-form.styles.scss'
 import Button from "../button/button.component";
 
+
 const defaultformFields ={
     displayname: '',
     email: '',
@@ -16,6 +17,8 @@ const defaultformFields ={
 const SingUpForm = () => {
     const [formFields, setFormFields] = useState(defaultformFields);
     const { displayname,email,password,confirmpassword} = formFields;
+
+  
 
     const resetFormFields = () => {
         setFormFields(defaultformFields)
@@ -31,10 +34,11 @@ const SingUpForm = () => {
             const { user } = await createAuthUserWithEmailAndPassword(email,password)
             
             await createUserDocumentFromAuth(user, {displayname} );
+
             resetFormFields()
 
         }catch(error){
-            if(error.code == 'auth/email-already-in-use'){
+            if(error.code === 'auth/email-already-in-use'){
                 alert('Email already in use')
             }else{
             console.log('user creation encountered an error',error)}
