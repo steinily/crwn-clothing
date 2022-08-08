@@ -85,7 +85,7 @@ export const createUserDocumentFromAuth = async (userAuth , additionalInformatio
     }
   }
 
-  return userDocRef;
+  return userSnapShot;
 } 
 
 
@@ -121,3 +121,17 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 //  return categoryMap;
 // 
 }
+
+export const getCurrentUser = () => {
+  return new Promise((resolve,reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unsubscribe();
+        resolve(userAuth)
+      },
+      reject
+    )
+  })
+}
+
